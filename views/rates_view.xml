@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--form view of the menu -->
+
+    <record id="view_rates_info_form" model="ir.ui.view">
+        <field name="name">rates.info.form</field>
+        <field name="model">regulatory.payments</field>
+        <field name="arch" type="xml">
+            <form create='1' delete='1' edit='1'>
+                <sheet>
+                    <group>
+                        <field name='fee_name'/>
+                        <field name='price'/>
+                        <field name='date_of_payment'/>
+                        <field name='time'/>
+                        <field name='next_payment'/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- tree view -->
+    <record id="view_rates_info_tree" model="ir.ui.view">
+        <field name="name">rates.info.tree</field>
+        <field name="model">regulatory.payments</field>
+        <field name="arch" type="xml">
+            <tree create='1' delete='0' edit='1' multi_edit="1">
+                <field name='id'/>
+                <field name='fee_name'/>
+                <field name='price'/>
+                <field name='date_of_payment'/>
+                <field name='time'/>
+                <field name='next_payment'/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- search view of the menu-->
+     <record id="view_rates_info_search" model="ir.ui.view">
+        <field name="name">rates.info.search</field>
+        <field name="model">regulatory.payments</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name='fee_name' filter_domain="[
+                        '|', '|', '|',
+                        ('fee_name', 'ilike', self), ('price', 'ilike', self), ('date_of_payment', 'ilike', self), ('time', 'ilike', self), ('next_payment', 'ilike', self)]"/>
+                <field name='price'/>
+                <field name='date_of_payment'/>
+                <field name='time'/>
+                <field name='next_payment'/>
+                <filter name='filter_annual' string='Annually' domain="[('time','=','annually')]"/>
+                <separator/>
+                <filter name='filter_monthly' string='Monthly' domain="[('time','=','monthly')]"/>
+                <separator/>
+                <filter name='filter_biannually' string='Bi-annually' domain="[('time','=','biannually')]"/>
+                <separator/>
+                <filter name='filter_quarterly' string='Quarterly' domain="[('time','=','quarterly')]"/>
+
+                <group expand="0" string="Group By">
+                        <filter name="group_by_time" string="Time Frame" domain="[]" context="{'group_by': 'time'}"/>
+                </group>
+
+                <searchpanel>
+                        <field name="time" string="Time Frame" icon="fa-users" select="multi" enable_counters="1"/>
+                </searchpanel>
+
+            </search>
+        </field>
+    </record>
+
+    <!-- menu action -->
+    <record id="rates_info_action" model="ir.actions.act_window">
+        <field name="name">Regulatory Payments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">regulatory.payments</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add your first regulatory payment!
+            </p>
+        </field>
+
+    </record>
+
+      <!-- menu definition -->
+    <menuitem id="fees_menu"
+        name="Regulatory Payments"
+        action="rates_info_action"
+        parent="government_rates_root"
+        sequence="10"/>
+
+</odoo>
+        

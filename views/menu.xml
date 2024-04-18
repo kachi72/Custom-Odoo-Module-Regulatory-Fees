@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Top menu item -->
+    <menuitem id="government_rates_root"
+        name="Regulatory Payments "
+        sequence="0"
+        web_icon="government_rates,static/description/icon.png"/>
+
+</odoo>
